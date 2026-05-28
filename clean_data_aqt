@@ -1,0 +1,7 @@
+#!/bin/sh
+# Clean local_obs data
+cleaner -maxfiles 2 '_aqt_.*.sqd' /smartmet/editor/in
+#cleaner -maxfiles 2 '_aqt_.*.sqd' /smartmet/data/aqt
+
+# Clean incoming directory
+find /smartmet/data/incoming/local_obs -type f -name "*AQT*csv" -mtime +7 -delete >& /dev/null

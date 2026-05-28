@@ -85,6 +85,9 @@ _run_awk() {
     }
 
     {
+      # Skip the vast majority of rows cheaply before any field processing
+      if ($0 !~ /LATITUDE_DEGREES_VALUE_PT0S_1|LONGITUDE_DEGREES_VALUE_PT0S_1/) next
+
       for (i = 1; i <= NF; i++) gsub(/"/, "", $i)
 
       station = $1

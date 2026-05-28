@@ -22,6 +22,7 @@ set -euo pipefail
 DATASET="aqt"
 
 SCRIPTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPODIR="$(cd "$SCRIPTDIR/.." && pwd)"
 
 if [[ -d /smartmet ]]; then
   BASE=/smartmet
@@ -31,7 +32,7 @@ fi
 
 CNF="$BASE/cnf/data/${DATASET}.cnf"
 if [[ ! -s "$CNF" ]]; then
-  CNF="$SCRIPTDIR/cnf/${DATASET}.cnf"
+  CNF="$REPODIR/cnf/${DATASET}.cnf"
 fi
 if [[ -s "$CNF" ]]; then
   # shellcheck source=/dev/null
@@ -46,7 +47,7 @@ TIMESTAMP="$(date +%Y%m%d%H%M)"
 OUT="${OUT:-$BASE/data/aqt/querydata}"
 OBSFILE="$TMP/${TIMESTAMP}_aqt.sqd"
 STATIONFILE="${STATIONFILE:-$BASE/run/data/aqt/cnf/stations.csv}"
-PARAMFILE="${PARAMFILE:-$SCRIPTDIR/cnf/parameters.csv}"
+PARAMFILE="${PARAMFILE:-$REPODIR/cnf/parameters.csv}"
 INFILE="${CSV2QD_INPUT:-$TMP/csv2qd_input_aqt.csv}"
 # Must match order in cnf/aqt-obs-params.txt
 PARAMS="${PARAMS:-Temperature,Humidity,Pressure,WindSpeedMS,WindDirection,Precipitation1h}"

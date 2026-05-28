@@ -20,6 +20,7 @@ set -euo pipefail
 #   STATION_BASE    - first station number assigned to new stations (default: 90001)
 
 SCRIPTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPODIR="$(cd "$SCRIPTDIR/.." && pwd)"
 
 if [[ -d /smartmet ]]; then
   BASE=/smartmet
@@ -29,14 +30,14 @@ fi
 
 CNF="$BASE/cnf/data/aqt.cnf"
 if [[ ! -s "$CNF" ]]; then
-  CNF="$SCRIPTDIR/cnf/aqt.cnf"
+  CNF="$REPODIR/cnf/aqt.cnf"
 fi
 if [[ -s "$CNF" ]]; then
   # shellcheck source=/dev/null
   . "$CNF"
 fi
 
-AQT_OBS_PARAMS="${AQT_OBS_PARAMS:-$SCRIPTDIR/cnf/aqt-obs-params.txt}"
+AQT_OBS_PARAMS="${AQT_OBS_PARAMS:-$REPODIR/cnf/aqt-obs-params.txt}"
 STATIONFILE="${STATIONFILE:-$BASE/run/data/aqt/cnf/stations.csv}"
 STATION_BASE="${STATION_BASE:-90001}"
 

@@ -1,0 +1,11 @@
+# Default configuration for ET AQT data pipeline.
+# Copy to /smartmet/cnf/data/aqt.cnf and adjust paths for the target system.
+
+# Directory containing raw observation CSV files
+DATA_RAW_ROOT=/smartmet/data/incoming/et_aqt
+
+# Directory for intermediate csv2qd input files
+OUTDIR=/smartmet/tmp/data/aqt
+
+# Directory for final querydata output
+OUT=/smartmet/data/aqt/querydata

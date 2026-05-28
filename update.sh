@@ -6,17 +6,17 @@ set -euo pipefail
 # Processes AQT observation CSV files from the Ethiopian data feed into
 # csv2qd input format, then calls convert-to-sqd.sh to produce querydata.
 #
-# Reads site-specific configuration from /smartmet/cnf/data/et-aqt.cnf
-# (or cnf/et-aqt.cnf in the project directory as fallback).
+# Reads site-specific configuration from /smartmet/cnf/data/aqt.cnf
+# (or cnf/aqt.cnf in the project directory as fallback).
 #
 # Required variables (set in .cnf or environment):
 #   DATA_RAW_ROOT   - directory containing raw observation CSV files
 #   OUTDIR          - directory for intermediate csv2qd input files
 #
 # Optional variables (with defaults shown):
-#   AQT_OBS_PARAMS  - path to obs-param list (default: <script dir>/et-aqt-obs-params.txt)
+#   AQT_OBS_PARAMS  - path to obs-param list (default: <script dir>/cnf/aqt-obs-params.txt)
 #   STATIONFILE     - path to stations CSV; updated automatically on each run
-#                     (default: $BASE/run/data/et-aqt/cnf/stations.csv)
+#                     (default: $BASE/run/data/aqt/cnf/stations.csv)
 #   STATION_BASE    - first station number assigned to new stations (default: 90001)
 
 SCRIPTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -27,17 +27,17 @@ else
   BASE=$HOME
 fi
 
-CNF="$BASE/cnf/data/et-aqt.cnf"
+CNF="$BASE/cnf/data/aqt.cnf"
 if [[ ! -s "$CNF" ]]; then
-  CNF="$SCRIPTDIR/cnf/et-aqt.cnf"
+  CNF="$SCRIPTDIR/cnf/aqt.cnf"
 fi
 if [[ -s "$CNF" ]]; then
   # shellcheck source=/dev/null
   . "$CNF"
 fi
 
-AQT_OBS_PARAMS="${AQT_OBS_PARAMS:-$SCRIPTDIR/et-aqt-obs-params.txt}"
-STATIONFILE="${STATIONFILE:-$BASE/run/data/et-aqt/cnf/stations.csv}"
+AQT_OBS_PARAMS="${AQT_OBS_PARAMS:-$SCRIPTDIR/cnf/aqt-obs-params.txt}"
+STATIONFILE="${STATIONFILE:-$BASE/run/data/aqt/cnf/stations.csv}"
 STATION_BASE="${STATION_BASE:-90001}"
 
 mkdir -p "$OUTDIR"
@@ -55,7 +55,7 @@ find "$DATA_RAW_ROOT" -type f -name 'observations_*.csv' -print0 \
       --out "$STATIONFILE"
 
 # --- Parse CSV files into csv2qd input ---
-AQT_OUT="$OUTDIR/csv2qd_input_et_aqt.csv"
+AQT_OUT="$OUTDIR/csv2qd_input_aqt.csv"
 : > "$AQT_OUT"
 
 echo "Processing ET AQT CSV files from: $DATA_RAW_ROOT" >&2

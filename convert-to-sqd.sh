@@ -6,8 +6,8 @@ set -euo pipefail
 # Usage:
 #   ./convert-to-sqd.sh
 #
-# Reads site-specific configuration from /smartmet/cnf/data/et-aqt.cnf
-# (or cnf/et-aqt.cnf in the project directory as fallback).
+# Reads site-specific configuration from /smartmet/cnf/data/aqt.cnf
+# (or cnf/aqt.cnf in the project directory as fallback).
 # Variables already exported in the environment take precedence over .cnf values.
 #
 # Configuration variables:
@@ -19,7 +19,7 @@ set -euo pipefail
 #   PRODNUM      - csv2qd product number (default: 1001)
 #   PRODNAME     - csv2qd product name (default: SYNOP)
 
-DATASET="et-aqt"
+DATASET="aqt"
 
 SCRIPTDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -38,17 +38,17 @@ if [[ -s "$CNF" ]]; then
   . "$CNF"
 fi
 
-TMP="${TMP:-$BASE/tmp/data/et-aqt}"
+TMP="${TMP:-$BASE/tmp/data/aqt}"
 EDITOR="${EDITOR:-$BASE/editor/in}"
-LOGFILE="${LOGFILE:-$BASE/logs/data/et-aqt.log}"
+LOGFILE="${LOGFILE:-$BASE/logs/data/aqt.log}"
 TIMESTAMP="$(date +%Y%m%d%H%M)"
 
-OUT="${OUT:-$BASE/data/et-aqt/querydata}"
-OBSFILE="$TMP/${TIMESTAMP}_et_aqt.sqd"
-STATIONFILE="${STATIONFILE:-$BASE/run/data/et-aqt/cnf/stations.csv}"
+OUT="${OUT:-$BASE/data/aqt/querydata}"
+OBSFILE="$TMP/${TIMESTAMP}_aqt.sqd"
+STATIONFILE="${STATIONFILE:-$BASE/run/data/aqt/cnf/stations.csv}"
 PARAMFILE="${PARAMFILE:-$SCRIPTDIR/cnf/parameters.csv}"
-INFILE="${CSV2QD_INPUT:-$TMP/csv2qd_input_et_aqt.csv}"
-# Must match order in et-aqt-obs-params.txt
+INFILE="${CSV2QD_INPUT:-$TMP/csv2qd_input_aqt.csv}"
+# Must match order in cnf/aqt-obs-params.txt
 PARAMS="${PARAMS:-Temperature,Humidity,Pressure,WindSpeedMS,WindDirection,Precipitation1h}"
 PRODNUM="${PRODNUM:-1001}"
 PRODNAME="${PRODNAME:-SYNOP}"
